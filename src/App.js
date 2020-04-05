@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react"
+import "./App.css"
+import SwipePage from "./pages/SwipePage"
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const [likePeople, setLikePeople] = useState([])
+	const [superlikePeople, setSuperlikePeople] = useState([])
+	const [dislikePeople, setDislikePeople] = useState([])
+
+	const like = (person) => setLikePeople([...likePeople, person])
+	const dislike = (person) => setDislikePeople([...dislikePeople, person])
+	const superlike = (person) =>
+		setSuperlikePeople([...superlikePeople, person])
+
+	return (
+		<div className="App">
+			<SwipePage like={like} dislike={dislike} superlike={superlike} />
+		</div>
+	)
 }
 
-export default App;
+export default App
