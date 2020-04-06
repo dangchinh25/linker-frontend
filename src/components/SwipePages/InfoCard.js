@@ -7,7 +7,7 @@ const CardContainer = styled.div`
 	height: 80vh;
 	width: 100%;
 	border-radius: 1rem;
-	padding: 5px;
+	padding: 10px;
 
 	.info {
 		position: absolute;
@@ -26,6 +26,13 @@ const Image = styled.img`
 	height: 100%;
 	object-fit: cover;
 	border-radius: 1.5rem;
+	box-shadow: 0px 0px 9px 2px rgba(0, 0, 0, 0.35);
+	cursor: pointer;
+	transition: 0.2s all ease;
+
+	&:hover {
+		transform: scale(1.01);
+	}
 `
 
 function InfoCard({ name, age, desc, image }) {

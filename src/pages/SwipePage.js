@@ -11,6 +11,7 @@ const OuterContainer = styled.div`
 	height: 100vh;
 	margin: auto;
 	background-color: white;
+	border-radius: 30px;
 `
 
 const FooterContainer = styled.div`
