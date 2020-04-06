@@ -13,9 +13,8 @@ const StepContainer = styled.div`
 
 function GeneralStep() {
 	const [userInfo, setUserInfo] = useState({
-		name: "",
-		dateBirth: 0,
-		monthBirth: 0,
+		lastName: "",
+		firstName: "",
 		yearBirth: 0,
 		gender: "Male",
 		desc: "",
@@ -29,19 +28,11 @@ function GeneralStep() {
 
 	const dispatch = useDispatch()
 
-	let date = []
-	let month = []
 	let year = []
 	for (let i = 1980; i <= 2001; i++) {
 		year.push(i)
 	}
-	for (let i = 1; i <= 31; i++) {
-		date.push(i)
-		if (i <= 12) month.push(i)
-	}
 
-	const dateSelection = date.map((item) => <option>{item}</option>)
-	const monthSelection = month.map((item) => <option>{item}</option>)
 	const yearSelection = year.map((item) => <option>{item}</option>)
 
 	const genderSelection = ["Male", "Female", "Other"].map((item) => (
@@ -52,29 +43,18 @@ function GeneralStep() {
 		<StepContainer>
 			<input
 				type="text"
-				placeholder="name"
-				name="name"
+				placeholder="Last name"
+				name="lastName"
 				onChange={onChangeHandler}
 			/>
+			<input
+				type="text"
+				placeholder="First name"
+				name="firstName"
+				onChange={onChangeHandler}
+			/>
+
 			<div>
-				<label for="date">Date:</label>
-				<select
-					id="date"
-					name="dateBirth"
-					onChange={onChangeHandler}
-				>
-					{dateSelection}
-				</select>
-
-				<label for="month">Month:</label>
-				<select
-					id="month"
-					name="monthBirth"
-					onChange={onChangeHandler}
-				>
-					{monthSelection}
-				</select>
-
 				<label for="year">Year:</label>
 				<select
 					id="year"
@@ -84,6 +64,7 @@ function GeneralStep() {
 					{yearSelection}
 				</select>
 			</div>
+
 			<div>
 				<label for="gender">Gender:</label>
 				<select

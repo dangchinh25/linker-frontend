@@ -23,7 +23,7 @@ function App() {
 				<Router>
 					<Route
 						path="/swipe"
-						component={() => (
+						render={() => (
 							<SwipePage
 								like={like}
 								dislike={dislike}
