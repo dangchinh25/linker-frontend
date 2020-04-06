@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
+import { useSelector, useDispatch } from "react-redux"
 import InfoCard from "../components/SwipePages/InfoCard"
 import Header from "../components/SwipePages/Header"
 import data from "../data.json"
@@ -23,6 +24,8 @@ const FooterContainer = styled.div`
 `
 
 function SwipePage({ like, dislike, superlike }) {
+	const data = useSelector((state) => state.usersData)
+
 	const [people, setPeople] = useState(data)
 	const [current, setCurrent] = useState(0)
 

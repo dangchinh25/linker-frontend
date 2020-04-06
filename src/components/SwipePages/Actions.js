@@ -5,8 +5,8 @@ const MainButton = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 90px;
-	height: 90px;
+	width: 75px;
+	height: 75px;
 	border: none;
 	padding: 20px;
 	background-color: white;

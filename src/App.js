@@ -1,6 +1,11 @@
 import React, { useState } from "react"
 import "./App.css"
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import { store } from "./redux/store"
+import { Provider } from "react-redux"
 import SwipePage from "./pages/SwipePage"
+import CurrentUser from "./pages/CurrentUser"
+import Onboarding from "./pages/OnBoarding"
 
 function App() {
 	const [likePeople, setLikePeople] = useState([])
@@ -13,9 +18,24 @@ function App() {
 		setSuperlikePeople([...superlikePeople, person])
 
 	return (
-		<div className="App">
-			<SwipePage like={like} dislike={dislike} superlike={superlike} />
-		</div>
+		<Provider store={store}>
+			<div className="App">
+				<Router>
+					<Route
+						path="/swipe"
+						component={() => (
+							<SwipePage
+								like={like}
+								dislike={dislike}
+								superlike={superlike}
+							/>
+						)}
+					/>
+
+					<Route path="/onboarding" component={Onboarding} />
+				</Router>
+			</div>
+		</Provider>
 	)
 }
 
