@@ -11,15 +11,22 @@ const OuterContainer = styled.div`
 	border-radius: 30px;
 `
 
-function CurrentUser() {
+function MatchPage() {
 	return (
 		<OuterContainer>
 			<Header />
-			<h2>Chinh Le</h2>
-			<h3>19</h3>
-			<p>Yoloooo</p>
+			<div>
+				<p>Matches</p>
+			</div>
+			<div>
+				<p>Search matches</p>
+			</div>
+			<div>
+				<p>New matches</p>
+			</div>
+			<div>Messages</div>
 		</OuterContainer>
 	)
 }
 
-export default CurrentUser
+export default MatchPage

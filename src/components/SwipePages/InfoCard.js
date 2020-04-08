@@ -67,7 +67,7 @@ const Image = styled.img`
 	}
 `
 
-function InfoCard({ name, age, desc, image }) {
+function InfoCard({ name, age, desc, image, type }) {
 	const [currentImage, setCurrentImage] = useState(0)
 
 	const nextImage = () => {
@@ -85,19 +85,27 @@ function InfoCard({ name, age, desc, image }) {
 		setCurrentImage(currentImage - 1)
 	}
 
-	return (
-		<CardContainer>
-			<Image src={`/images/users/${image[currentImage]}`} />
-			<ArrowBackIosIcon className="left" onClick={prevImage} />
-			<ArrowForwardIosIcon className="right" onClick={nextImage} />
+	const CardRender =
+		type === "continue" ? (
+			<CardContainer>
+				<Image src={`/images/users/${image[currentImage]}`} />
+				<ArrowBackIosIcon className="left" onClick={prevImage} />
+				<ArrowForwardIosIcon
+					className="right"
+					onClick={nextImage}
+				/>
 
-			<div className="info">
-				<p>{name}</p>
-				<p>{age}</p>
-				<p>{desc}</p>
-			</div>
-		</CardContainer>
-	)
+				<div className="info">
+					<p>{name}</p>
+					<p>{age}</p>
+					<p>{desc}</p>
+				</div>
+			</CardContainer>
+		) : (
+			<CardContainer>No more people around</CardContainer>
+		)
+
+	return CardRender
 }
 
 export default InfoCard

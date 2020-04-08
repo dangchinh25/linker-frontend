@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
+import { Link } from "react-router-dom"
 import InfoCard from "../components/SwipePages/InfoCard"
-import Header from "../components/SwipePages/Header"
+import Header from "../components/shared/Header"
 import data from "../data.json"
 import Actions from "../components/SwipePages/Actions"
 
@@ -60,12 +61,17 @@ function SwipePage({ like, dislike, superlike }) {
 	return (
 		<OuterContainer>
 			<Header />
-			<InfoCard
-				name={people[current].name}
-				age={people[current].age}
-				desc={people[current].desc}
-				image={people[current].image}
-			/>
+			{current < people.length ? (
+				<InfoCard
+					type="continue"
+					name={people[current].name}
+					age={people[current].age}
+					desc={people[current].desc}
+					image={people[current].image}
+				/>
+			) : (
+				<InfoCard type="stop" />
+			)}
 
 			<FooterContainer>
 				<Actions types={actionTypes.rewind} />

@@ -1,5 +1,6 @@
 import React from "react"
 import styled from "styled-components"
+import { Link } from "react-router-dom"
 
 const HeaderContainer = styled.div`
 	width: 100%;
@@ -46,6 +47,7 @@ const SwitchButton = styled.input`
 	transition: 300ms;
 	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.35);
 	cursor: pointer;
+	margin-top: 14px;
 
 	&:checked {
 	}
@@ -82,13 +84,19 @@ function Header() {
 
 	return (
 		<HeaderContainer>
-			<Button>
-				<img src="images/misc/user.png" />
-			</Button>
-			<SwitchButton type="checkbox" />
-			<Button>
-				<img src="images/misc/messages.png" />
-			</Button>
+			<Link to="/userprofile">
+				<Button>
+					<img src="images/misc/user.png" />
+				</Button>
+			</Link>
+			<Link to="/swipe">
+				<SwitchButton type="checkbox" />
+			</Link>
+			<Link to="/match">
+				<Button>
+					<img src="images/misc/messages.png" />
+				</Button>
+			</Link>
 		</HeaderContainer>
 	)
 }

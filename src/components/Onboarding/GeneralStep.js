@@ -9,6 +9,51 @@ const StepContainer = styled.div`
 	align-items: center;
 	justify-content: center;
 	box-sizing: border-box;
+	padding: 10px;
+`
+
+const InputContainer = styled.div`
+	display: flex;
+	flex-direction: row;
+`
+
+const Input = styled.input`
+	padding: 10px 10px;
+	padding-left: 20px;
+	border-radius: 30px;
+	border: 1px solid black;
+	font-size: 15px;
+	line-height: 25px;
+	font-family: "Baloo Thambi 2";
+	outline: none;
+	margin-bottom: 15px;
+	margin-right: 10px;
+`
+
+const Textarea = styled.textarea`
+	padding: 10px 23px;
+	border-radius: 20px;
+	border: 1px solid black;
+	font-size: 15px;
+	line-height: 25px;
+	font-family: "Baloo Thambi 2";
+	outline: none;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	resize: none;
+`
+
+const Button = styled.button`
+	padding: 8px 20px;
+	border: 1px solid black;
+	border-radius: 15px;
+	cursor: pointer;
+	transition: 0.2s all ease;
+	outline: none;
+
+	&:hover {
+		transform: scale(1.1);
+	}
 `
 
 function GeneralStep() {
@@ -33,6 +78,22 @@ function GeneralStep() {
 		year.push(i)
 	}
 
+	const onClick = (event) => {
+		if (
+			userInfo.lastName == "" ||
+			userInfo.firstName == "" ||
+			userInfo.desc == ""
+		) {
+			alert("Please fill all field")
+
+			return
+		}
+		dispatch({
+			type: "NEW USER",
+			payload: userInfo,
+		})
+	}
+
 	const yearSelection = year.map((item) => <option>{item}</option>)
 
 	const genderSelection = ["Male", "Female", "Other"].map((item) => (
@@ -41,21 +102,23 @@ function GeneralStep() {
 
 	return (
 		<StepContainer>
-			<input
-				type="text"
-				placeholder="Last name"
-				name="lastName"
-				onChange={onChangeHandler}
-			/>
-			<input
-				type="text"
-				placeholder="First name"
-				name="firstName"
-				onChange={onChangeHandler}
-			/>
+			<InputContainer>
+				<Input
+					type="text"
+					placeholder="Last name"
+					name="lastName"
+					onChange={onChangeHandler}
+				/>
+				<Input
+					type="text"
+					placeholder="First name"
+					name="firstName"
+					onChange={onChangeHandler}
+				/>
+			</InputContainer>
 
-			<div>
-				<label for="year">Year:</label>
+			<InputContainer>
+				<label for="year">Year of Birth: </label>
 				<select
 					id="year"
 					name="yearBirth"
@@ -63,9 +126,7 @@ function GeneralStep() {
 				>
 					{yearSelection}
 				</select>
-			</div>
 
-			<div>
 				<label for="gender">Gender:</label>
 				<select
 					id="gender"
@@ -74,23 +135,16 @@ function GeneralStep() {
 				>
 					{genderSelection}
 				</select>
-			</div>
+			</InputContainer>
 
-			<textarea
+			<Textarea
+				cols="48"
+				rows="7"
 				placeholder="Short description"
 				name="desc"
 				onChange={onChangeHandler}
 			/>
-			<button
-				onClick={() =>
-					dispatch({
-						type: "NEW USER",
-						payload: userInfo,
-					})
-				}
-			>
-				Submit
-			</button>
+			<Button onClick={onClick}>Next</Button>
 		</StepContainer>
 	)
 }

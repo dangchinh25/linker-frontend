@@ -1,11 +1,13 @@
 import React, { useState } from "react"
 import "./App.css"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { store } from "./redux/store"
 import { Provider } from "react-redux"
 import SwipePage from "./pages/SwipePage"
 import CurrentUser from "./pages/CurrentUser"
 import Onboarding from "./pages/OnBoarding"
+import Auth from "./pages/Auth"
+import MatchPage from "./pages/MatchPage"
 
 function App() {
 	const [likePeople, setLikePeople] = useState([])
@@ -21,18 +23,29 @@ function App() {
 		<Provider store={store}>
 			<div className="App">
 				<Router>
-					<Route
-						path="/swipe"
-						render={() => (
-							<SwipePage
-								like={like}
-								dislike={dislike}
-								superlike={superlike}
-							/>
-						)}
-					/>
+					<Switch>
+						<Route path="/auth" component={Auth} />
+						<Route
+							path="/swipe"
+							render={() => (
+								<SwipePage
+									like={like}
+									dislike={dislike}
+									superlike={superlike}
+								/>
+							)}
+						/>
+						<Route
+							path="/userprofile"
+							component={CurrentUser}
+						/>
+						<Route path="/match" component={MatchPage} />
 
-					<Route path="/onboarding" component={Onboarding} />
+						<Route
+							path="/onboarding"
+							component={Onboarding}
+						/>
+					</Switch>
 				</Router>
 			</div>
 		</Provider>
