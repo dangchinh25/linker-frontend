@@ -1,69 +1,43 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
+import Select from "react-select"
+import {
+	StepContainer,
+	Input,
+	InputContainer,
+	Button,
+	Textarea,
+	SelectContainer,
+} from "./GeneralStepStyle"
 
-const StepContainer = styled.div`
-	display: flex;
-	height: 90vh;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	box-sizing: border-box;
-	padding: 10px;
-`
-
-const InputContainer = styled.div`
-	display: flex;
-	flex-direction: row;
-`
-
-const Input = styled.input`
-	padding: 10px 10px;
-	padding-left: 20px;
+const StyledPicker = styled(DatePicker)`
+	padding: 15px;
+	outline: none;
 	border-radius: 30px;
 	border: 1px solid black;
-	font-size: 15px;
-	line-height: 25px;
-	font-family: "Baloo Thambi 2";
-	outline: none;
-	margin-bottom: 15px;
-	margin-right: 10px;
-`
-
-const Textarea = styled.textarea`
-	padding: 10px 23px;
-	border-radius: 20px;
-	border: 1px solid black;
-	font-size: 15px;
-	line-height: 25px;
-	font-family: "Baloo Thambi 2";
-	outline: none;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	resize: none;
-`
-
-const Button = styled.button`
-	padding: 8px 20px;
-	border: 1px solid black;
-	border-radius: 15px;
 	cursor: pointer;
-	transition: 0.2s all ease;
-	outline: none;
+`
 
-	&:hover {
-		transform: scale(1.1);
-	}
+const StyledSelect = styled(Select)`
+	width: 190px;
+	outline: none;
+	border-radius: 30px;
 `
 
 function GeneralStep() {
 	const [userInfo, setUserInfo] = useState({
 		lastName: "",
 		firstName: "",
+		dateBirth: 0,
+		monthBirth: 0,
 		yearBirth: 0,
 		gender: "Male",
 		desc: "",
 	})
+	const [date, setDate] = useState(new Date())
 
 	const onChangeHandler = (e) =>
 		setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
@@ -72,11 +46,6 @@ function GeneralStep() {
 	console.log(data)
 
 	const dispatch = useDispatch()
-
-	let year = []
-	for (let i = 1980; i <= 2001; i++) {
-		year.push(i)
-	}
 
 	const onClick = (event) => {
 		if (
@@ -94,11 +63,11 @@ function GeneralStep() {
 		})
 	}
 
-	const yearSelection = year.map((item) => <option>{item}</option>)
-
-	const genderSelection = ["Male", "Female", "Other"].map((item) => (
-		<option>{item}</option>
-	))
+	const genderSelection = [
+		{ value: "Male", label: "Male" },
+		{ value: "Female", label: "Female" },
+		{ value: "Other", label: "Other" },
+	]
 
 	return (
 		<StepContainer>
@@ -117,25 +86,28 @@ function GeneralStep() {
 				/>
 			</InputContainer>
 
-			<InputContainer>
-				<label for="year">Year of Birth: </label>
-				<select
-					id="year"
-					name="yearBirth"
-					onChange={onChangeHandler}
-				>
-					{yearSelection}
-				</select>
+			<SelectContainer>
+				<h3>Your date of birth</h3>
+				<StyledPicker
+					dateFormat="yyyy/MM/dd"
+					selected={date}
+					onChange={(date) => {
+						setUserInfo({
+							...userInfo,
+							dateBirth: date.getDate(),
+							monthBirth: date.getMonth(),
+							yearBirth: date.getFullYear(),
+						})
 
-				<label for="gender">Gender:</label>
-				<select
-					id="gender"
-					name="gender"
-					onChange={onChangeHandler}
-				>
-					{genderSelection}
-				</select>
-			</InputContainer>
+						setDate(date)
+					}}
+				/>
+			</SelectContainer>
+
+			<SelectContainer>
+				<h3>Your gender</h3>
+				<StyledSelect options={genderSelection} />
+			</SelectContainer>
 
 			<Textarea
 				cols="48"

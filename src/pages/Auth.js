@@ -44,25 +44,58 @@ const Button = styled.button`
 	}
 `
 
+const SwitchMode = styled.button`
+	border: none;
+	background: none;
+	outline: none;
+	font-size: 15px;
+	cursor: pointer;
+	color: blue;
+`
+
 function Auth() {
 	const [auth, setAuth] = useState("login")
+	const [loginData, setLoginData] = useState({
+		email: "",
+		password: "",
+	})
+	const [signUpData, setSignUpData] = useState({
+		email: "",
+		password: "",
+		name: "",
+	})
 
-	const setLogin = () => {
-		setAuth("login")
+	const setAuthState = () => {
+		auth === "login" ? setAuth("signup") : setAuth("login")
 	}
-	const setSignUp = () => {
-		setAuth("signup")
+
+	const onChangeAuth = (e) => {
+		auth === "login"
+			? setLoginData({ ...loginData, [e.target.name]: e.target.value })
+			: setSignUpData({
+					...signUpData,
+					[e.target.name]: e.target.value,
+			  })
 	}
 
 	const Login = (
 		<InnerContainer>
 			<h2>Login</h2>
-			<Input placeholder="Email..." />
-			<Input placeholder="Password..." />
+			<Input
+				placeholder="Email..."
+				name="email"
+				onChange={onChangeAuth}
+			/>
+			<Input
+				type="password"
+				placeholder="Password..."
+				name="password"
+				onChange={onChangeAuth}
+			/>
 			<Button>Login</Button>
 			<p>
 				Don't have an account?,
-				<button onClick={setSignUp}>Sign Up</button>
+				<SwitchMode onClick={setAuthState}>Sign Up</SwitchMode>
 			</p>
 		</InnerContainer>
 	)
@@ -70,12 +103,26 @@ function Auth() {
 	const SignUp = (
 		<InnerContainer>
 			<h2>Sign Up</h2>
-			<Input placeholder="Email..." />
-			<Input placeholder="Password..." />
-			<Button>Login</Button>
+			<Input
+				placeholder="Name..."
+				name="name"
+				onChange={onChangeAuth}
+			/>
+			<Input
+				placeholder="Email..."
+				name="email"
+				onChange={onChangeAuth}
+			/>
+			<Input
+				type="password"
+				placeholder="Password..."
+				name="password"
+				onChange={onChangeAuth}
+			/>
+			<Button>Sign Up</Button>
 			<p>
 				Already had an accout?,
-				<button onClick={setLogin}>Login</button>
+				<SwitchMode onClick={setAuthState}>Login</SwitchMode>
 			</p>
 		</InnerContainer>
 	)
