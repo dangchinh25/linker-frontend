@@ -77,11 +77,6 @@ const SwitchButton = styled.input`
 `
 
 function Header() {
-	const actionTypes = {
-		message: "MESSAGES",
-		user: "USER",
-	}
-
 	return (
 		<HeaderContainer>
 			<Link to="/userprofile">

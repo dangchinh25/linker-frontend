@@ -1,14 +1,14 @@
 import data from "../data.json"
 import { createUserData } from "./actions"
 
-const initialState = {
+const onboardingState = {
 	usersData: data,
 	images: [],
 	isOnboard: false,
 	isAuth: false,
 }
 
-export const onBoardingReducers = (state = initialState, action) => {
+export const onBoardingReducer = (state = onboardingState, action) => {
 	switch (action.type) {
 		case "NEW ONBOARDING":
 			return {
@@ -28,6 +28,12 @@ export const onBoardingReducers = (state = initialState, action) => {
 						images: [...state.images, action.payload],
 				  }
 				: state
+
+		case "AUTH":
+			return {
+				...state,
+				isAuth: true,
+			}
 
 		default:
 			return state

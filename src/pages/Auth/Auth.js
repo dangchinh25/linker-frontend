@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components"
+import { useSelector, useDispatch } from "react-redux"
 import {
 	InnerContainer,
 	Input,
@@ -7,6 +8,7 @@ import {
 	OuterContainer,
 	SwitchMode,
 } from "./AuthStyle.js"
+import { Redirect } from "react-router-dom"
 
 function Auth() {
 	const [auth, setAuth] = useState("login")
@@ -19,6 +21,8 @@ function Auth() {
 		password: "",
 		name: "",
 	})
+
+	const dispatch = useDispatch()
 
 	const setAuthState = () => {
 		auth === "login" ? setAuth("signup") : setAuth("login")
@@ -47,7 +51,16 @@ function Auth() {
 				name="password"
 				onChange={onChangeAuth}
 			/>
-			<Button>Login</Button>
+			<Button
+				onClick={(e) => {
+					e.preventDefault()
+					dispatch({
+						type: "AUTH",
+					})
+				}}
+			>
+				Login
+			</Button>
 			<p>
 				Don't have an account?,
 				<SwitchMode onClick={setAuthState}>Sign Up</SwitchMode>

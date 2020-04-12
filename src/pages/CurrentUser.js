@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Header from "../components/shared/Header"
+import { Layout } from "../components/shared/Layout"
 
 const OuterContainer = styled.div`
 	box-sizing: border-box;
@@ -13,12 +14,12 @@ const OuterContainer = styled.div`
 
 function CurrentUser() {
 	return (
-		<OuterContainer>
+		<Layout>
 			<Header />
 			<h2>Chinh Le</h2>
 			<h3>19</h3>
 			<p>Yoloooo</p>
-		</OuterContainer>
+		</Layout>
 	)
 }
 
