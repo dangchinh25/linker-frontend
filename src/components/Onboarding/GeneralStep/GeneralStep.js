@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import styled from "styled-components"
-import { useSelector, useDispatch } from "react-redux"
 import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import Select from "react-select"
@@ -11,7 +10,7 @@ import {
 	Button,
 	Textarea,
 	SelectContainer,
-} from "./GeneralStepStyle"
+} from "../StepStyle"
 
 const StyledPicker = styled(DatePicker)`
 	padding: 15px;
@@ -27,41 +26,8 @@ const StyledSelect = styled(Select)`
 	border-radius: 30px;
 `
 
-function GeneralStep() {
-	const [userInfo, setUserInfo] = useState({
-		lastName: "",
-		firstName: "",
-		dateBirth: 0,
-		monthBirth: 0,
-		yearBirth: 0,
-		gender: "Male",
-		desc: "",
-	})
+function GeneralStep({ onChangeHandler, next, userInfo, setUserInfo }) {
 	const [date, setDate] = useState(new Date())
-
-	const onChangeHandler = (e) =>
-		setUserInfo({ ...userInfo, [e.target.name]: e.target.value })
-
-	const data = useSelector((state) => state.usersData)
-	console.log(data)
-
-	const dispatch = useDispatch()
-
-	const onClick = (event) => {
-		if (
-			userInfo.lastName == "" ||
-			userInfo.firstName == "" ||
-			userInfo.desc == ""
-		) {
-			alert("Please fill all field")
-
-			return
-		}
-		dispatch({
-			type: "NEW USER",
-			payload: userInfo,
-		})
-	}
 
 	const genderSelection = [
 		{ value: "Male", label: "Male" },
@@ -77,12 +43,14 @@ function GeneralStep() {
 					placeholder="Last name"
 					name="lastName"
 					onChange={onChangeHandler}
+					value={userInfo.lastName}
 				/>
 				<Input
 					type="text"
 					placeholder="First name"
 					name="firstName"
 					onChange={onChangeHandler}
+					value={userInfo.firstName}
 				/>
 			</InputContainer>
 
@@ -106,7 +74,16 @@ function GeneralStep() {
 
 			<SelectContainer>
 				<h3>Your gender</h3>
-				<StyledSelect options={genderSelection} />
+				<StyledSelect
+					options={genderSelection}
+					onChange={(e) =>
+						setUserInfo({ ...userInfo, gender: e.value })
+					}
+					defaultValue={{
+						label: userInfo.gender,
+						value: userInfo.gender,
+					}}
+				/>
 			</SelectContainer>
 
 			<Textarea
@@ -115,8 +92,9 @@ function GeneralStep() {
 				placeholder="Short description"
 				name="desc"
 				onChange={onChangeHandler}
+				value={userInfo.desc}
 			/>
-			<Button onClick={onClick}>Next</Button>
+			<Button onClick={next}>Next</Button>
 		</StepContainer>
 	)
 }

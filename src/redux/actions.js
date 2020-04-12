@@ -1,12 +1,24 @@
-export const createNewUser = (userInfo) => {
-	const { lastName, firstName, yearBirth, gender, desc } = userInfo
+export const createUserData = (userInfo, images) => {
+	const {
+		lastName,
+		firstName,
+		yearBirth,
+		gender,
+		desc,
+		dateBirth,
+		monthBirth,
+	} = userInfo
 
-	const newUser = {
+	const newData = {
 		name: firstName + " " + lastName,
 		age: new Date().getFullYear() - yearBirth,
+		dateBirth,
+		monthBirth,
+		yearBirth,
 		gender,
 		desc: desc,
+		images,
 	}
 
-	return newUser
+	return newData
 }

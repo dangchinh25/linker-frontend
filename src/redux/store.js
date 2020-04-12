@@ -1,4 +1,4 @@
 import { createStore } from "redux"
-import { reducers } from "./reducers"
+import { onBoardingReducers } from "./reducers"
 
-export const store = createStore(reducers)
+export const store = createStore(onBoardingReducers)

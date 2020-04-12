@@ -1,17 +1,33 @@
 import data from "../data.json"
-import { createNewUser } from "./actions"
+import { createUserData } from "./actions"
 
-const initialState = { usersData: data }
+const initialState = {
+	usersData: data,
+	images: [],
+	isOnboard: false,
+	isAuth: false,
+}
 
-export const reducers = (state = initialState, action) => {
+export const onBoardingReducers = (state = initialState, action) => {
 	switch (action.type) {
-		case "NEW USER":
+		case "NEW ONBOARDING":
 			return {
+				...state,
 				usersData: [
 					...state.usersData,
-					createNewUser(action.payload),
+					createUserData(action.payload, state.images),
 				],
+				images: [],
+				isOnboard: true,
 			}
+
+		case "NEW IMAGE":
+			return action.payload
+				? {
+						...state,
+						images: [...state.images, action.payload],
+				  }
+				: state
 
 		default:
 			return state

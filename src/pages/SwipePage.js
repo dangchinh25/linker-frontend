@@ -6,15 +6,7 @@ import InfoCard from "../components/SwipePages/InfoCard"
 import Header from "../components/shared/Header"
 import data from "../data.json"
 import Actions from "../components/SwipePages/Actions"
-
-const OuterContainer = styled.div`
-	box-sizing: border-box;
-	width: 500px;
-	height: 100vh;
-	margin: auto;
-	background-color: white;
-	border-radius: 30px;
-`
+import { Layout } from "../components/shared/Layout"
 
 const FooterContainer = styled.div`
 	width: 100%;
@@ -59,7 +51,7 @@ function SwipePage({ like, dislike, superlike }) {
 	}
 
 	return (
-		<OuterContainer>
+		<Layout>
 			<Header />
 			{current < people.length ? (
 				<InfoCard
@@ -85,7 +77,7 @@ function SwipePage({ like, dislike, superlike }) {
 				/>
 				<Actions types={actionTypes.like} nextPerson={nextPerson} />
 			</FooterContainer>
-		</OuterContainer>
+		</Layout>
 	)
 }
 
