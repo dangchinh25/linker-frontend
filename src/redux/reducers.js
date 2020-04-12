@@ -5,7 +5,10 @@ const onboardingState = {
 	usersData: data,
 	images: [],
 	isOnboard: false,
-	isAuth: false,
+}
+
+const authState = {
+	isAuthenticated: false,
 }
 
 export const onBoardingReducer = (state = onboardingState, action) => {
@@ -29,10 +32,17 @@ export const onBoardingReducer = (state = onboardingState, action) => {
 				  }
 				: state
 
-		case "AUTH":
+		default:
+			return state
+	}
+}
+
+export const authReducer = (state = authState, action) => {
+	switch (action.type) {
+		case "LOGIN":
 			return {
 				...state,
-				isAuth: true,
+				isAuthenticated: true,
 			}
 
 		default:

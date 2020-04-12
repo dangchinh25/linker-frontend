@@ -1,4 +1,6 @@
 import { createStore, combineReducers } from "redux"
-import { onBoardingReducer } from "./reducers"
+import { onBoardingReducer, authReducer } from "./reducers"
 
-export const store = createStore(onBoardingReducer)
+const rootReducer = combineReducers({ onBoardingReducer, authReducer })
+
+export const store = createStore(rootReducer)

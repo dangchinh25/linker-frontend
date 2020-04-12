@@ -17,7 +17,7 @@ const FooterContainer = styled.div`
 `
 
 function SwipePage({ like, dislike, superlike }) {
-	const data = useSelector((state) => state.usersData)
+	const data = useSelector((state) => state.onBoardingReducer.usersData)
 
 	const [people, setPeople] = useState(data)
 	const [current, setCurrent] = useState(0)

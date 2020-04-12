@@ -37,6 +37,16 @@ function Auth() {
 			  })
 	}
 
+	const authSubmitHandler = (e) => {
+		e.preventDefault()
+
+		if (auth === "login") {
+			dispatch({
+				type: "LOGIN",
+			})
+		}
+	}
+
 	const Login = (
 		<InnerContainer>
 			<h2>Login</h2>
@@ -51,16 +61,7 @@ function Auth() {
 				name="password"
 				onChange={onChangeAuth}
 			/>
-			<Button
-				onClick={(e) => {
-					e.preventDefault()
-					dispatch({
-						type: "AUTH",
-					})
-				}}
-			>
-				Login
-			</Button>
+			<Button onClick={authSubmitHandler}>Login</Button>
 			<p>
 				Don't have an account?,
 				<SwitchMode onClick={setAuthState}>Sign Up</SwitchMode>

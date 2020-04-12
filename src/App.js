@@ -23,7 +23,7 @@ function App() {
 	const superlike = (person) =>
 		setSuperlikePeople([...superlikePeople, person])
 
-	const isAuth = useSelector((state) => state.isAuth)
+	const isAuth = useSelector((state) => state.authReducer.isAuthenticated)
 	console.log(isAuth)
 	let routes
 
