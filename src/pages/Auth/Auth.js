@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import styled from "styled-components"
-import { useSelector, useDispatch } from "react-redux"
+import { useDispatch } from "react-redux"
 import axios from "axios"
 
 import {
@@ -10,7 +9,6 @@ import {
 	OuterContainer,
 	SwitchMode,
 } from "./AuthStyle.js"
-import { Redirect } from "react-router-dom"
 
 function Auth() {
 	const [auth, setAuth] = useState("login")
