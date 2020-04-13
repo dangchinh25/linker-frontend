@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import styled from "styled-components"
 import { useSelector, useDispatch } from "react-redux"
+import axios from "axios"
+
 import {
 	InnerContainer,
 	Input,
@@ -37,12 +39,26 @@ function Auth() {
 			  })
 	}
 
-	const authSubmitHandler = (e) => {
+	const authSubmitHandler = async (e) => {
 		e.preventDefault()
 
 		if (auth === "login") {
+			const responseData = await axios.post(
+				"http://localhost:5000/user/login",
+				loginData
+			)
 			dispatch({
 				type: "LOGIN",
+				payload: loginData,
+			})
+		} else {
+			const responseData = await axios.post(
+				"http://localhost:5000/user/new",
+				signUpData
+			)
+			dispatch({
+				type: "LOGIN",
+				payload: responseData,
 			})
 		}
 	}
@@ -53,6 +69,7 @@ function Auth() {
 			<Input
 				placeholder="Email..."
 				name="email"
+				value={loginData.email}
 				onChange={onChangeAuth}
 			/>
 			<Input
@@ -60,6 +77,7 @@ function Auth() {
 				placeholder="Password..."
 				name="password"
 				onChange={onChangeAuth}
+				value={loginData.password}
 			/>
 			<Button onClick={authSubmitHandler}>Login</Button>
 			<p>
@@ -76,19 +94,22 @@ function Auth() {
 				placeholder="Name..."
 				name="name"
 				onChange={onChangeAuth}
+				value={signUpData.name}
 			/>
 			<Input
 				placeholder="Email..."
 				name="email"
 				onChange={onChangeAuth}
+				value={signUpData.email}
 			/>
 			<Input
 				type="password"
 				placeholder="Password..."
 				name="password"
+				value={signUpData.password}
 				onChange={onChangeAuth}
 			/>
-			<Button>Sign Up</Button>
+			<Button onClick={authSubmitHandler}>Sign Up</Button>
 			<p>
 				Already had an accout?,
 				<SwitchMode onClick={setAuthState}>Login</SwitchMode>

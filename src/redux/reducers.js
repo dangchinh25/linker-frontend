@@ -40,10 +40,25 @@ export const onBoardingReducer = (state = onboardingState, action) => {
 export const authReducer = (state = authState, action) => {
 	switch (action.type) {
 		case "LOGIN":
+			const { userId, token, expDate } = action.payload
+			const localExpDate =
+				expDate || new Date(new Date().getTime() + 1000 * 60 * 60)
+			localStorage.setItem(
+				"userAuth",
+				JSON.stringify({
+					userId,
+					token,
+					expiration: localExpDate.toISOString(),
+				})
+			)
+
 			return {
 				...state,
 				isAuthenticated: true,
 			}
+
+		case "LOGOUT":
+			localStorage.removeItem("userData")
 
 		default:
 			return state
