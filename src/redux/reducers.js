@@ -9,6 +9,9 @@ const onboardingState = {
 
 const authState = {
 	isAuthenticated: false,
+	token: "",
+	userId: "",
+	expDate: "",
 }
 
 export const onBoardingReducer = (state = onboardingState, action) => {
@@ -46,8 +49,8 @@ export const authReducer = (state = authState, action) => {
 			localStorage.setItem(
 				"userAuth",
 				JSON.stringify({
-					userId,
-					token,
+					userId: userId,
+					token: token,
 					expiration: localExpDate.toISOString(),
 				})
 			)
@@ -55,10 +58,20 @@ export const authReducer = (state = authState, action) => {
 			return {
 				...state,
 				isAuthenticated: true,
+				userId,
+				token,
+				expDate,
 			}
 
 		case "LOGOUT":
 			localStorage.removeItem("userData")
+			return {
+				...state,
+				isAuthenticated: false,
+				userId: null,
+				expDate: null,
+				token: null,
+			}
 
 		default:
 			return state
