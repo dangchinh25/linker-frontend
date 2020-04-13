@@ -47,7 +47,7 @@ function Auth() {
 			)
 			dispatch({
 				type: "LOGIN",
-				payload: loginData,
+				payload: responseData.data,
 			})
 		} else {
 			const responseData = await axios.post(

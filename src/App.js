@@ -11,7 +11,9 @@ import CurrentUser from "./pages/CurrentUser"
 import Onboarding from "./pages/OnBoarding"
 import Auth from "./pages/Auth/Auth"
 import MatchPage from "./pages/MatchPage"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+
+let logOutTimer
 
 function App() {
 	const [likePeople, setLikePeople] = useState([])
@@ -23,11 +25,44 @@ function App() {
 	const superlike = (person) =>
 		setSuperlikePeople([...superlikePeople, person])
 
-	const isAuth = useSelector((state) => state.authReducer.isAuthenticated)
-	console.log(isAuth)
+	const { isAuthenticated, userId, token, expDate } = useSelector(
+		(state) => state.authReducer
+	)
+
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		if (token && expDate) {
+			const remainingTime = expDate.getTime() - new Date().getTime()
+			logOutTimer = setTimeout(
+				dispatch({ type: "LOGOUT" }),
+				remainingTime
+			)
+		} else {
+			clearTimeout(logOutTimer)
+		}
+	}, [token, expDate])
+
+	useEffect(() => {
+		const storedData = JSON.parse(localStorage.getItem("userAuth"))
+		if (
+			storedData &&
+			storedData.token &&
+			new Date(storedData.expiration) > new Date()
+		) {
+			dispatch({
+				type: "LOGIN",
+				payload: {
+					userId: storedData.userId,
+					token: storedData.token,
+				},
+			})
+		}
+	}, [])
+
 	let routes
 
-	if (isAuth) {
+	if (token) {
 		routes = (
 			<Switch>
 				<Route
@@ -40,10 +75,13 @@ function App() {
 						/>
 					)}
 				/>
-				<Route path="/userprofile" component={CurrentUser} />
+				<Route
+					path="/userprofile/:userId"
+					component={CurrentUser}
+				/>
 				<Route path="/match" component={MatchPage} />
 
-				<Route path="/onboarding" component={Onboarding} />
+				<Route path="/onboarding/:userId" component={Onboarding} />
 				<Redirect to="/swipe" />
 			</Switch>
 		)
